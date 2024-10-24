@@ -71,5 +71,9 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.androidx.navigation.compose)
     implementation(libs.hilt.android)
-
+    implementation(libs.room.android)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.open.csv)
 }
