@@ -71,8 +71,9 @@ fun CompanyListingsScreen(
                     CompanyItem(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(16.dp)
                             .clickable {
-                                // TODO: Navigation
+                                // TODO: Navigate to detail screen
                             },
                         company = company
                     )
