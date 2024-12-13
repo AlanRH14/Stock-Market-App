@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.util
+package com.example.stockmarketapp.domain.utils
 
 object Constants {
     const val DB_NAME = ""
