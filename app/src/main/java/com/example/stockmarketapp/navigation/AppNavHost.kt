@@ -19,6 +19,7 @@ fun AppNavHost(
     ) {
        composable(Screen.CompanyListings.route) {
            CompanyListingsScreen(
+               modifier = modifier,
                navigation = navController
            )
        }
