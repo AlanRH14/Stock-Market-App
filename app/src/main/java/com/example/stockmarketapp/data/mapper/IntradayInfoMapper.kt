@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 fun IntradayInfoDto.toIntradayInfo(): IntradayInfo {
     val pattern = "yyyy-MM-dd HH:mm:ss"
     val formatter = SimpleDateFormat(pattern, Locale.getDefault())
