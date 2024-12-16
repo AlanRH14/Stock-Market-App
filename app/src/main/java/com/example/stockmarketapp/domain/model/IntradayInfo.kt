@@ -1,8 +1,8 @@
 package com.example.stockmarketapp.domain.model
 
-import java.time.LocalDateTime
+import java.util.Date
 
 data class IntradayInfo(
-    val date: LocalDateTime,
+    val date: Date,
     val close: Double
 )
