@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.remote.api.ApiConstants.BASE_URL
 import com.example.stockmarketapp.data.remote.api.StockApi
-import com.example.stockmarketapp.util.Constants.DB_NAME
+import com.example.stockmarketapp.domain.utils.Constants.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

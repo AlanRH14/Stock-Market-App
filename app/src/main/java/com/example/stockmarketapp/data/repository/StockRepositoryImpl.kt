@@ -7,7 +7,7 @@ import com.example.stockmarketapp.data.mapper.toCompanyListingEntity
 import com.example.stockmarketapp.data.remote.api.StockApi
 import com.example.stockmarketapp.domain.model.CompanyListing
 import com.example.stockmarketapp.domain.repository.StockRepository
-import com.example.stockmarketapp.util.Resource
+import com.example.stockmarketapp.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
@@ -61,7 +61,8 @@ class StockRepositoryImpl @Inject constructor(
                 dao.insertCompanyListings(
                     listings.map { it.toCompanyListingEntity() }
                 )
-                emit(Resource.Success(
+                emit(
+                    Resource.Success(
                     data = dao
                         .searchCompanyListing("")
                         .map { it.toCompanyListing() }

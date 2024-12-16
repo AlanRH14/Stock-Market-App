@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.util
+package com.example.stockmarketapp.domain.utils
 
 sealed class Resource<T>(val data: T? = null, message: String? = null) {
     class Success<T>(data: T?) : Resource<T>(data = data)
