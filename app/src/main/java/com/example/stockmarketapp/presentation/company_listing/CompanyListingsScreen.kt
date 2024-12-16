@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompanyListingsScreen(
+    modifier: Modifier = Modifier,
     navigation: NavController,
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
@@ -48,7 +49,7 @@ fun CompanyListingsScreen(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         OutlinedTextField(

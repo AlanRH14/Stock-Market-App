@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             StockMarketAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppNavHost()
+                    AppNavHost(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
