@@ -20,10 +20,14 @@ class CompanyListingsViewModel @Inject constructor(
     var state by mutableStateOf(CompanyListingsState())
     private var searchJob: Job? = null
 
+    init {
+        getCompanyListings()
+    }
+
     fun onEvent(event: CompanyListingsEvent) {
         when (event) {
             is CompanyListingsEvent.Refresh -> {
-
+                getCompanyListings(fetchFromRemote = true)
             }
 
             is CompanyListingsEvent.OnSearchQueryChange -> {
