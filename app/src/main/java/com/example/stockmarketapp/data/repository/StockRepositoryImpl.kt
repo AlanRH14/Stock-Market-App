@@ -5,7 +5,9 @@ import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.mapper.toCompanyListing
 import com.example.stockmarketapp.data.mapper.toCompanyListingEntity
 import com.example.stockmarketapp.data.remote.api.StockApi
+import com.example.stockmarketapp.domain.CompanyInfo
 import com.example.stockmarketapp.domain.model.CompanyListing
+import com.example.stockmarketapp.domain.model.IntradayInfo
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -70,5 +72,27 @@ class StockRepositoryImpl @Inject constructor(
                 emit(Resource.Loading(false))
             }
         }
+    }
+
+    override suspend fun getIntradayInfo(symbol: String): Resource<IntradayInfo> {
+        return try {
+            val response = api.getIntradayInfo(symbol = symbol)
+        } catch (e: IOException){
+            e.printStackTrace()
+            Resource.Error(
+                data = null,
+                message = "Couldn´t load intraday info"
+            )
+        } catch (e: HttpException){
+            e.printStackTrace()
+            Resource.Error(
+                data = null,
+                message = "Couldn't load intraday info"
+            )
+        }
+    }
+
+    override suspend fun fetCompanyInfo(symbol: String): Resource<CompanyInfo> {
+        TODO("Not yet implemented")
     }
 }
