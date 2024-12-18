@@ -17,7 +17,7 @@ interface StockApi {
     suspend fun getIntradayInfo(
         @Query("symbol") symbol: String,
         @Query("apikey") apikey: String = API_KEY,
-    )
+    ): ResponseBody
 
     @GET("query?function=OVERVIEW")
     suspend fun getCompanyInfo(
