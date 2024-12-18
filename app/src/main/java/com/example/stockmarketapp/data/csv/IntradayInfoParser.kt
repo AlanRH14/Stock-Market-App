@@ -9,7 +9,6 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.Calendar
-import java.util.Date
 import javax.inject.Inject
 
 class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfo> {
@@ -30,18 +29,14 @@ class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfo> {
                     dto.toIntradayInfo()
                 }
                 .filter {
-                    val dateNow = Date()
-                    val calendarNow = Calendar.getInstance()
-                    calendarNow.time = dateNow
-                    val calendarDayInfo = Calendar.getInstance()
-                    calendarDayInfo.time = it.date
-
-                    calendarDayInfo.get(Calendar.DAY_OF_MONTH) == calendarNow.get(Calendar.DAY_OF_MONTH)
-                    // TODO: Cambiar
+                    val calendar = Calendar.getInstance()
+                    calendar.time = it.date
+                    calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 }
                 .sortedBy {
-                    // TODO: Cambiar
-                    it.date.hours
+                    val calendar = Calendar.getInstance()
+                    calendar.time = it.date
+                    calendar.get(Calendar.HOUR)
                 }
                 .also {
                     csvReader.close()
