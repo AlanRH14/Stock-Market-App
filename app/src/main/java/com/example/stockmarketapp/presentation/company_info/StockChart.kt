@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.sp
 import com.example.stockmarketapp.domain.model.IntradayInfo
@@ -47,7 +48,14 @@ fun StockChart(
             val intradayInfo = info[i]
             calendar.time = intradayInfo.date
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
-
+            drawContext.canvas.nativeCanvas.apply {
+                drawText(
+                    hour.toString(),
+                    spacing + i * spacePerHour,
+                    size.height - 5,
+                    textPaint
+                )
+            }
         }
     }
 }
