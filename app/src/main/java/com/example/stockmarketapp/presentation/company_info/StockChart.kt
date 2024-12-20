@@ -1,6 +1,7 @@
 package com.example.stockmarketapp.presentation.company_info
 
 import android.graphics.Paint
+import android.graphics.Path
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
@@ -69,6 +70,24 @@ fun StockChart(
                     size.height - spacing - i * size.height / 5F,
                     textPaint
                 )
+            }
+        }
+
+        val strokePath = Path().apply {
+            val height = size.height
+            for (i in info.indices) {
+                val mInfo = info[i]
+                val nextInfo = info.getOrNull(i + 1) ?: info.last()
+                val leftRatio = (mInfo.close - lowerValue) / (upperValue - lowerValue)
+                val rightRatio = (nextInfo.close - lowerValue) / (upperValue - lowerValue)
+
+                val x1 = spacing + i * spacePerHour
+                val y1 = height - spacing - (leftRatio * height).toFloat()
+                val x2 = spacing + (i + 1) * spacePerHour
+                val y2 = height - spacing - (rightRatio * height).toFloat()
+                if (i == 0) {
+                    moveTo(x1, y1)
+                }
             }
         }
     }
