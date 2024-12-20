@@ -88,6 +88,8 @@ fun StockChart(
                 if (i == 0) {
                     moveTo(x1, y1)
                 }
+
+                cubicTo(x1, x2, (x1 + x2) / 2f, (y1 + y2) / 2F, 0F, 0F)
             }
         }
     }
