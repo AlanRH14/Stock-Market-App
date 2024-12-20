@@ -12,7 +12,9 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.sp
 import com.example.stockmarketapp.domain.model.IntradayInfo
+import java.lang.Math.round
 import java.util.Calendar
+
 import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -29,7 +31,7 @@ fun StockChart(
     val upperValue = remember(info) {
         (info.maxOfOrNull { it.close }?.plus(1)?.roundToInt() ?: 0)
     }
-    val lowValue = remember(info) {
+    val lowerValue = remember(info) {
         (info.minOfOrNull { it.close }?.toInt() ?: 0)
     }
     val density = LocalDensity.current
@@ -53,6 +55,18 @@ fun StockChart(
                     hour.toString(),
                     spacing + i * spacePerHour,
                     size.height - 5,
+                    textPaint
+                )
+            }
+        }
+
+        val priceStep = (upperValue - lowerValue) / 5
+        (0..5).forEach { i ->
+            drawContext.canvas.nativeCanvas.apply {
+                drawText(
+                    round((lowerValue + priceStep * i).toDouble()).toString(),
+                    30F,
+                    size.height - spacing - i * size.height / 5F,
                     textPaint
                 )
             }
