@@ -77,7 +77,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.room.android)
     implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
+    implementation(libs.moshi.converter)
+    implementation(libs.moshi.kotlin)
     implementation(libs.okhttp)
     implementation(libs.open.csv)
 }
