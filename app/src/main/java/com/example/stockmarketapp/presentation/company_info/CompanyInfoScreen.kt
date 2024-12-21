@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +37,7 @@ fun CompanyInfoScreen(
                 .fillMaxSize()
                 .background(DarkBlue)
                 .padding(16.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             state.company?.let { company ->
                 Text(
@@ -80,7 +83,7 @@ fun CompanyInfoScreen(
                 if (state.stockInfo.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Market Summary")
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     StockChart(
                         modifier = Modifier
                             .fillMaxWidth()
