@@ -61,7 +61,7 @@ class CompanyInfoViewModel @Inject constructor(
                     state = state.copy(
                         error = result.message,
                         isLoading = false,
-                        stockInfo = emptyList(),
+                        company = null,
                     )
                 }
 

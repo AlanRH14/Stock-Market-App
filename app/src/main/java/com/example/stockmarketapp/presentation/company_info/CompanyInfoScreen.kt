@@ -1,8 +1,6 @@
 package com.example.stockmarketapp.presentation.company_info
 
-import android.widget.Space
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,10 +28,8 @@ fun CompanyInfoScreen(
     modifier: Modifier = Modifier,
     viewModel: CompanyInfoViewModel = hiltViewModel(),
 ) {
-
     val state = viewModel.state
-
-    if (state.error != null) {
+    if (state.error == null) {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -98,7 +94,7 @@ fun CompanyInfoScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         if (state.isLoading) {
