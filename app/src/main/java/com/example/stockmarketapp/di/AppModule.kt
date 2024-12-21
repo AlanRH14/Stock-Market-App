@@ -6,6 +6,8 @@ import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.remote.api.ApiConstants.BASE_URL
 import com.example.stockmarketapp.data.remote.api.StockApi
 import com.example.stockmarketapp.domain.utils.Constants.DB_NAME
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +27,12 @@ object AppModule {
         Retrofit
             .Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder()
+                        .add(KotlinJsonAdapterFactory()).build()
+                )
+            )
             .build()
             .create()
 

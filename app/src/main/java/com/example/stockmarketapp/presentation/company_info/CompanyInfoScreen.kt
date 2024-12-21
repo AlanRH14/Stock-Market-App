@@ -2,6 +2,7 @@ package com.example.stockmarketapp.presentation.company_info
 
 import android.widget.Space
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,6 @@ import com.example.stockmarketapp.ui.theme.DarkBlue
 @Composable
 fun CompanyInfoScreen(
     modifier: Modifier = Modifier,
-    symbol: String,
     viewModel: CompanyInfoViewModel = hiltViewModel(),
 ) {
 
@@ -97,7 +97,10 @@ fun CompanyInfoScreen(
         }
     }
 
-    Box(modifier = modifier.fillMaxWidth()) {
+    Box(
+        modifier = modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center,
+    ) {
         if (state.isLoading) {
             CircularProgressIndicator()
         } else if (state.error != null) {

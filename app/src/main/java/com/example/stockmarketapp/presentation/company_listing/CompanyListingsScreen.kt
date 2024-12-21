@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
+import com.example.stockmarketapp.navigation.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -86,7 +87,10 @@ fun CompanyListingsScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                // TODO: Navigate to detail screen
+                                navigation.navigate(route = "${Screen.CompanyInfo.route}/{symbol}".replace(
+                                    oldValue = "{symbol}",
+                                    newValue = company.symbol
+                                ))
                             },
                         company = company
                     )
