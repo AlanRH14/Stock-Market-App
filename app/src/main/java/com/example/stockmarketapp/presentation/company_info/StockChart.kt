@@ -1,9 +1,7 @@
 package com.example.stockmarketapp.presentation.company_info
 
 import android.graphics.Paint
-import android.graphics.Path
-import android.os.Build
-import androidx.annotation.RequiresApi
+import androidx.compose.ui.graphics.Path
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -15,10 +13,8 @@ import androidx.compose.ui.unit.sp
 import com.example.stockmarketapp.domain.model.IntradayInfo
 import java.lang.Math.round
 import java.util.Calendar
-
 import kotlin.math.roundToInt
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StockChart(
     modifier: Modifier = Modifier,
@@ -88,8 +84,8 @@ fun StockChart(
                 if (i == 0) {
                     moveTo(x1, y1)
                 }
-                // TODO : Search alternatives for quadraticBezierTo
-                cubicTo(x1, x2, (x1 + x2) / 2f, (y1 + y2) / 2F, 0F, 0F)
+
+                quadraticTo(x1, y1, (x1 + x2) / 2f, (y1 + y2) / 2F)
             }
         }
     }
