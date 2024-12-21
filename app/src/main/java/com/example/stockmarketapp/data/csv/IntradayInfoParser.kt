@@ -31,7 +31,7 @@ class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfo> {
                 .filter {
                     val calendar = Calendar.getInstance()
                     calendar.time = it.date
-                    calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+                    calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH).minus(4)
                 }
                 .sortedBy {
                     val calendar = Calendar.getInstance()
