@@ -17,29 +17,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompanyListingsScreen(
+    modifier: Modifier = Modifier,
     navigation: NavController,
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
     val swipeRefresh = rememberPullToRefreshState()
     val state = viewModel.state
-    val isRefreshing by remember { mutableStateOf(state.isRefreshing) }
+    var isRefreshing by remember { mutableStateOf(state.isRefreshing) }
+    val coroutineScope = rememberCoroutineScope()
+    val onRefresh: () -> Unit = {
+        isRefreshing = true
+        coroutineScope.launch {
+            delay(500)
+            viewModel.onEvent(CompanyListingsEvent.Refresh)
+            isRefreshing = false
+        }
+    }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         OutlinedTextField(
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(16.dp),
             value = state.searchQuery,
             onValueChange = {
@@ -57,9 +72,7 @@ fun CompanyListingsScreen(
         PullToRefreshBox(
             state = swipeRefresh,
             isRefreshing = isRefreshing,
-            onRefresh = {
-                viewModel.onEvent(CompanyListingsEvent.Refresh)
-            }
+            onRefresh = onRefresh
         ) {
             LazyColumn(
                 modifier = Modifier
