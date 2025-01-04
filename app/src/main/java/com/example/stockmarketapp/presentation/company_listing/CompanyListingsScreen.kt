@@ -15,14 +15,12 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
 import com.example.stockmarketapp.navigation.Screen
@@ -37,15 +35,14 @@ fun CompanyListingsScreen(
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
     val swipeRefresh = rememberPullToRefreshState()
-    val state = viewModel.state
-    var isRefreshing by remember { mutableStateOf(state.isRefreshing) }
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
     val onRefresh: () -> Unit = {
-        isRefreshing = true
+        viewModel.updateRefresh(refresh = true)
         coroutineScope.launch {
             delay(500)
             viewModel.onEvent(CompanyListingsEvent.Refresh)
-            isRefreshing = false
+            viewModel.updateRefresh(refresh = false)
         }
     }
 
@@ -72,7 +69,7 @@ fun CompanyListingsScreen(
 
         PullToRefreshBox(
             state = swipeRefresh,
-            isRefreshing = isRefreshing,
+            isRefreshing = state.isRefreshing,
             onRefresh = onRefresh
         ) {
             LazyColumn(
@@ -87,10 +84,12 @@ fun CompanyListingsScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                navigation.navigate(route = "${Screen.CompanyInfo.route}/{symbol}".replace(
-                                    oldValue = "{symbol}",
-                                    newValue = company.symbol
-                                ))
+                                navigation.navigate(
+                                    route = "${Screen.CompanyInfo.route}/{symbol}".replace(
+                                        oldValue = "{symbol}",
+                                        newValue = company.symbol
+                                    )
+                                )
                             },
                         company = company
                     )
