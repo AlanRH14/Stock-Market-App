@@ -15,6 +15,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
@@ -30,7 +32,8 @@ fun CompanyInfoScreen(
     modifier: Modifier = Modifier,
     viewModel: CompanyInfoViewModel = hiltViewModel(),
 ) {
-    val state = viewModel.state
+    val state by viewModel.state.collectAsState()
+
     if (state.error == null) {
         Column(
             modifier = modifier
@@ -104,7 +107,7 @@ fun CompanyInfoScreen(
             CircularProgressIndicator()
         } else if (state.error != null) {
             Text(
-                text = state.error,
+                text = state.error ?: "Unknown",
                 color = MaterialTheme.colorScheme.error,
             )
         }
