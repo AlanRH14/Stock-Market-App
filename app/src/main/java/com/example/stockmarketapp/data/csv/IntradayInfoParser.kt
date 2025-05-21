@@ -12,6 +12,8 @@ import java.util.Calendar
 import javax.inject.Inject
 
 class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfo> {
+    private val calendar = Calendar.getInstance()
+    private val previousDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).minus(1)
 
     override suspend fun parse(stream: InputStream): List<IntradayInfo> {
         val csvReader = CSVReader(InputStreamReader(stream))
@@ -28,14 +30,12 @@ class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfo> {
                     )
                     dto.toIntradayInfo()
                 }
-                .filter {
-                    val calendar = Calendar.getInstance()
-                    calendar.time = it.date
-                    calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH).minus(4)
+                .filter { info ->
+                    calendar.time = info.date
+                    calendar.get(Calendar.DAY_OF_MONTH) == previousDate
                 }
-                .sortedBy {
-                    val calendar = Calendar.getInstance()
-                    calendar.time = it.date
+                .sortedBy { info ->
+                    calendar.time = info.date
                     calendar.get(Calendar.HOUR)
                 }
                 .also {
