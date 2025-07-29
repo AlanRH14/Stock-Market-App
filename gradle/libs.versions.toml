@@ -14,7 +14,7 @@ hiltAndroidxNavigationCompose = "1.2.0"
 hiltVersion = "2.57"
 retrofitVersion = "3.0.0"
 okhttpVersion = "5.1.0"
-roomVersion = "2.6.1"
+roomVersion = "2.7.2"
 moshiConverter = "2.11.0"
 moshiKotlin = "1.15.1"
 
