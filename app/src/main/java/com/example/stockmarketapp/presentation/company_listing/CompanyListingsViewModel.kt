@@ -32,7 +32,7 @@ class CompanyListingsViewModel(
             }
 
             is CompanyListingsEvent.OnSearchQueryChange -> {
-                _state.value = _state.value.copy(searchQuery = event.query)
+                _state.update { it.copy(searchQuery = event.query) }
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     delay(500L)

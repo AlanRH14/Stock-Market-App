@@ -79,9 +79,7 @@ fun CompanyListingsScreen(
                     CompanyListingsEvent.OnSearchQueryChange(it)
                 )
             },
-            placeholder = {
-                Text(text = stringResource(R.string.txt_search))
-            },
+            placeholder = { Text(text = stringResource(R.string.txt_search)) },
             maxLines = 1,
             singleLine = true,
         )
