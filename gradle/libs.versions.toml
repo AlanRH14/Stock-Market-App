@@ -10,8 +10,6 @@ activityCompose = "1.10.1"
 composeBom = "2025.07.00"
 kspVersion = "2.1.21-2.0.1"
 openCsv = "5.12.0"
-hiltAndroidxNavigationCompose = "1.2.0"
-hiltVersion = "2.57"
 koinAndroid = "4.1.0"
 retrofitVersion = "3.0.0"
 loggingInterceptor = "5.1.0"
@@ -34,9 +32,6 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
-hilt-androidx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose",  version.ref = "hiltAndroidxNavigationCompose"}
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion"}
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
@@ -55,5 +50,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 
