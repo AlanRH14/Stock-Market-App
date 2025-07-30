@@ -43,13 +43,13 @@ fun CompanyListingsScreen(
         viewModel.updateRefresh(refresh = true)
         coroutineScope.launch {
             delay(500)
-            viewModel.onEvent(CompanyListingsEvent.OnRefresh)
+            viewModel.onEvent(CompanyListingsUIEvent.OnRefresh)
             viewModel.updateRefresh(refresh = false)
         }
     }
 
     LaunchedEffect(key1 = true) {
-        viewModel.onEvent(event = CompanyListingsEvent.OnGetCompanyListings)
+        viewModel.onEvent(event = CompanyListingsUIEvent.OnGetCompanyListingsUI)
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is CompanyListingsEffect.NavigateToCompanyInfo -> {
@@ -76,7 +76,7 @@ fun CompanyListingsScreen(
             value = state.searchQuery,
             onValueChange = {
                 viewModel.onEvent(
-                    CompanyListingsEvent.OnSearchQueryChange(it)
+                    CompanyListingsUIEvent.OnSearchQueryChange(it)
                 )
             },
             placeholder = { Text(text = stringResource(R.string.txt_search)) },
@@ -101,7 +101,7 @@ fun CompanyListingsScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                viewModel.onEvent(CompanyListingsEvent.OnCompanyItemClicked(company.symbol))
+                                viewModel.onEvent(CompanyListingsUIEvent.OnCompanyItemClickedUI(company.symbol))
                             },
                         company = company
                     )
