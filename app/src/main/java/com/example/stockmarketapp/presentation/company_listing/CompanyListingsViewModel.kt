@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CompanyListingsViewModel(
@@ -53,24 +54,27 @@ class CompanyListingsViewModel(
             repository.getCompanyListing(fetchFromRemote = fetchFromRemote, query = query)
                 .collect { result ->
                     when (result) {
+                        is Resource.Loading -> {
+                            _state.update { it.copy(isLoading = result.isLoading) }
+                        }
+
                         is Resource.Success -> {
                             result.data?.let { listings ->
-                                _state.value = _state.value.copy(companies = listings)
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        companies = listings
+                                    )
+                                }
                             }
                         }
 
-                        is Resource.Error -> Unit
-
-                        is Resource.Loading -> {
-                            _state.value = _state.value.copy(isLoading = result.isLoading)
+                        is Resource.Error -> _state.update {
+                            it.copy(isLoading = false)
                         }
                     }
                 }
         }
-    }
-
-    fun updateRefresh(refresh: Boolean) {
-        _state.value = _state.value.copy(isRefreshing = refresh)
     }
 
     private fun navigateToCompanyInfo(symbol: String) {
