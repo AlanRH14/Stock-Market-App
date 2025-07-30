@@ -18,7 +18,7 @@ class CompanyListingsViewModel(
     private val _state = MutableStateFlow(CompanyListingsState())
     val state = _state.asStateFlow()
 
-    private val _effect = MutableSharedFlow<CompanyListingEffect>()
+    private val _effect = MutableSharedFlow<CompanyListingsEffect>()
     val effect = _effect.asSharedFlow()
 
     private var searchJob: Job? = null
