@@ -38,14 +38,8 @@ fun CompanyListingsScreen(
 ) {
     val swipeRefresh = rememberPullToRefreshState()
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val coroutineScope = rememberCoroutineScope()
     val onRefresh: () -> Unit = {
-        viewModel.updateRefresh(refresh = true)
-        coroutineScope.launch {
-            delay(500)
-            viewModel.onEvent(CompanyListingsUIEvent.OnRefresh)
-            viewModel.updateRefresh(refresh = false)
-        }
+        viewModel.onEvent(CompanyListingsUIEvent.OnRefresh)
     }
 
     LaunchedEffect(key1 = true) {

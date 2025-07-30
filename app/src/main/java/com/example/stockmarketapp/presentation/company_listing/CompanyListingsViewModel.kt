@@ -27,7 +27,10 @@ class CompanyListingsViewModel(
 
     fun onEvent(event: CompanyListingsUIEvent) {
         when (event) {
-            is CompanyListingsUIEvent.OnRefresh -> getCompanyListings(fetchFromRemote = true)
+            is CompanyListingsUIEvent.OnRefresh -> {
+                _state.update { it.copy(isRefreshing = true) }
+                getCompanyListings(fetchFromRemote = true)
+            }
 
             is CompanyListingsUIEvent.OnSearchQueryChange -> {
                 _state.update { it.copy(searchQuery = event.query) }
@@ -58,7 +61,13 @@ class CompanyListingsViewModel(
 
                         is Resource.Success -> {
                             result.data?.let { listings ->
-                                _state.update { it.copy(companies = listings) }
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        companies = listings,
+                                        isRefreshing = false
+                                    )
+                                }
                             }
                         }
 
