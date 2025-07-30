@@ -17,14 +17,6 @@ class CompanyApiMapper : ApiMapper<CompanyListingEntity, CompanyListing> {
     }
 }
 
-fun CompanyListing.toCompanyListingEntity(): CompanyListingEntity {
-    return CompanyListingEntity(
-        name = name,
-        symbol = symbol,
-        exchange = exchange
-    )
-}
-
 fun CompanyInfoDto.toCompanyInfo(): CompanyInfo {
     return CompanyInfo(
         symbol = symbol ?: "",
