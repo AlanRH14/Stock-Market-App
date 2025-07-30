@@ -4,7 +4,7 @@ import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.data.local.CompanyListingEntity
 import com.example.stockmarketapp.domain.model.CompanyListing
 
-class CompanyListingDomainMapper : ApiMapper<CompanyListing, CompanyListingEntity> {
+class CompanyDomainMapper : ApiMapper<CompanyListing, CompanyListingEntity> {
 
     override fun mapToDomain(apiDto: CompanyListing): CompanyListingEntity {
         return CompanyListingEntity(
