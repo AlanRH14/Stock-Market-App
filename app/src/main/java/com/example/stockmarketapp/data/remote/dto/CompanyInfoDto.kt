@@ -1,11 +1,13 @@
 package com.example.stockmarketapp.data.remote.dto
 
-import com.squareup.moshi.Json
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CompanyInfoDto(
-    @Json(name = "Symbol") val symbol: String?,
-    @Json(name = "Description") val description: String?,
-    @Json(name = "Name") val name: String?,
-    @Json(name = "Country") val country: String?,
-    @Json(name = "Industry") val industry: String?,
+    @SerialName("Symbol") val symbol: String? = null,
+    @SerialName("Description") val description: String? = null,
+    @SerialName("Name") val name: String? = null,
+    @SerialName("Country") val country: String? = null,
+    @SerialName("Industry") val industry: String? = null,
 )
