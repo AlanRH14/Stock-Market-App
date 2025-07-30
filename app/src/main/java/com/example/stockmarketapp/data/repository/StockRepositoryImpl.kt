@@ -1,6 +1,6 @@
 package com.example.stockmarketapp.data.repository
 
-import com.example.stockmarketapp.data.csv.CSVParser
+import com.example.stockmarketapp.common.CSVParser
 import com.example.stockmarketapp.data.local.StockDao
 import com.example.stockmarketapp.data.mapper.toCompanyInfo
 import com.example.stockmarketapp.data.mapper.toCompanyListing

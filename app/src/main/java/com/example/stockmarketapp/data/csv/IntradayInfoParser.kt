@@ -1,5 +1,6 @@
 package com.example.stockmarketapp.data.csv
 
+import com.example.stockmarketapp.common.CSVParser
 import com.example.stockmarketapp.data.mapper.toIntradayInfo
 import com.example.stockmarketapp.data.remote.dto.IntradayInfoDto
 import com.example.stockmarketapp.domain.model.IntradayInfo
