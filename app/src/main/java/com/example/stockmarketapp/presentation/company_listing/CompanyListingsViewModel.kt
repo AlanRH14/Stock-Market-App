@@ -27,9 +27,7 @@ class CompanyListingsViewModel(
 
     fun onEvent(event: CompanyListingsEvent) {
         when (event) {
-            is CompanyListingsEvent.OnRefresh -> {
-                getCompanyListings(fetchFromRemote = true)
-            }
+            is CompanyListingsEvent.OnRefresh -> getCompanyListings(fetchFromRemote = true)
 
             is CompanyListingsEvent.OnSearchQueryChange -> {
                 _state.update { it.copy(searchQuery = event.query) }
