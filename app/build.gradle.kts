@@ -68,8 +68,8 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.retrofit)
-    implementation(libs.moshi.converter)
-    implementation(libs.moshi.kotlin)
+    implementation(libs.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.okhttp)
     implementation(libs.open.csv)
 }
