@@ -12,11 +12,12 @@ kspVersion = "2.1.21-2.0.1"
 openCsv = "5.12.0"
 hiltAndroidxNavigationCompose = "1.2.0"
 hiltVersion = "2.57"
+koinAndroid = "4.1.0"
 retrofitVersion = "3.0.0"
+loggingInterceptor = "5.1.0"
 okhttpVersion = "5.1.0"
 roomVersion = "2.7.2"
-moshiConverter = "3.0.0"
-moshiKotlin = "1.15.2"
+kotlinxSerialization = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,10 +37,14 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 hilt-androidx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose",  version.ref = "hiltAndroidxNavigationCompose"}
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion"}
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", name = "moshi-converter", version.ref = "moshiConverter"}
-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+retrofit-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofitVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", name = "okhttp", version.ref = "okhttpVersion"}
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 room-android = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion"}
 open-csv = { module = "com.opencsv:opencsv", name = "open-csv", version.ref = "openCsv"}
@@ -49,5 +54,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 
