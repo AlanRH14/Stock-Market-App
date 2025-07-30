@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.stockmarketapp.R
 import com.example.stockmarketapp.navigation.Screen
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -41,10 +43,27 @@ fun CompanyListingsScreen(
         viewModel.updateRefresh(refresh = true)
         coroutineScope.launch {
             delay(500)
-            viewModel.onEvent(CompanyListingsEvent.Refresh)
+            viewModel.onEvent(CompanyListingsEvent.OnRefresh)
             viewModel.updateRefresh(refresh = false)
         }
     }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.onEvent(event = CompanyListingsEvent.OnGetCompanyListings)
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
+                is CompanyListingsEffect.NavigateToCompanyInfo -> {
+                    navigation.navigate(
+                        route = "${Screen.CompanyInfo.route}/{symbol}".replace(
+                            oldValue = "{symbol}",
+                            newValue = effect.symbol
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     Column(
         modifier = modifier
@@ -60,9 +79,7 @@ fun CompanyListingsScreen(
                     CompanyListingsEvent.OnSearchQueryChange(it)
                 )
             },
-            placeholder = {
-                Text(text = stringResource(R.string.txt_search))
-            },
+            placeholder = { Text(text = stringResource(R.string.txt_search)) },
             maxLines = 1,
             singleLine = true,
         )
@@ -84,12 +101,7 @@ fun CompanyListingsScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                navigation.navigate(
-                                    route = "${Screen.CompanyInfo.route}/{symbol}".replace(
-                                        oldValue = "{symbol}",
-                                        newValue = company.symbol
-                                    )
-                                )
+                                viewModel.onEvent(CompanyListingsEvent.OnCompanyItemClicked(company.symbol))
                             },
                         company = company
                     )
