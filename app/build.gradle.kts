@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlin.serialization)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.okhttp)
     implementation(libs.open.csv)
 }
