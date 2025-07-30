@@ -17,13 +17,5 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 val appModule = module {
 
 
-    single {
-        Room.databaseBuilder(
-            androidContext(),
-            StockDatabase::class.java,
-            DB_NAME
-        ).build()
-    }
 
-    single { get<StockDatabase>().stockDao() }
 }
