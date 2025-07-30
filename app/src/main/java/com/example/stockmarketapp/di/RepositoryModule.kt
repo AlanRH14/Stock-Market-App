@@ -15,10 +15,6 @@ import org.koin.dsl.module
 import javax.inject.Singleton
 
 val repositoryModule = module {
-    single<CSVParser<CompanyListing>> { CompanyListingsParser() }
-
-    single<CSVParser<IntradayInfo>> { IntradayInfoParser() }
-
     single<StockRepository> {
         StockRepositoryImpl(
             api = get(),
