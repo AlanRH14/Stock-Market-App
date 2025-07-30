@@ -79,10 +79,6 @@ class CompanyListingsViewModel(
         }
     }
 
-    fun updateRefresh(refresh: Boolean) {
-        _state.value = _state.value.copy(isRefreshing = refresh)
-    }
-
     private fun navigateToCompanyInfo(symbol: String) {
         viewModelScope.launch {
             _effect.emit(CompanyListingsEffect.NavigateToCompanyInfo(symbol = symbol))
