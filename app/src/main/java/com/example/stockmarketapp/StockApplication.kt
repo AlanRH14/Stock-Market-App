@@ -1,6 +1,7 @@
 package com.example.stockmarketapp
 
 import android.app.Application
+import com.example.stockmarketapp.di.apiMapperModule
 import com.example.stockmarketapp.di.appModule
 import com.example.stockmarketapp.di.csvParserModule
 import com.example.stockmarketapp.di.databaseModule
@@ -21,6 +22,7 @@ class StockApplication : Application() {
             modules(
                 networkModule,
                 csvParserModule,
+                apiMapperModule,
                 databaseModule,
                 repositoryModule,
                 appModule

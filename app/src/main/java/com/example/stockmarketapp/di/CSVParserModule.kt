@@ -10,5 +10,5 @@ import org.koin.dsl.module
 val csvParserModule = module {
     single<CSVParser<CompanyListing>> { CompanyListingsParser() }
 
-    single<CSVParser<IntradayInfo>> { IntradayInfoParser() }
+    single<CSVParser<IntradayInfo>> { IntradayInfoParser(get()) }
 }
