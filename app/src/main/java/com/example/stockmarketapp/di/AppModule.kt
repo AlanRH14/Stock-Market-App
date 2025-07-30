@@ -14,36 +14,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
-private val json = Json {
-    coerceInputValues = true
-    ignoreUnknownKeys = true
-}
-
-private val contentType = "application/json".toMediaType()
-
 val appModule = module {
-    single {
-        HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-    }
 
-    single {
-        OkHttpClient.Builder()
-            .addInterceptor(get<HttpLoggingInterceptor>())
-            .build()
-    }
-
-    single {
-        Retrofit
-            .Builder()
-            .baseUrl(BASE_URL)
-            .client(get<OkHttpClient>())
-            .addConverterFactory(json.asConverterFactory(contentType = contentType))
-            .build()
-    }
-
-    single { get<Retrofit>().create(StockApi::class.java) }
 
     single {
         Room.databaseBuilder(
