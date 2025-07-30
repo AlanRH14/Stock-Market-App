@@ -55,7 +55,6 @@ fun CompanyListingsScreen(
         }
     }
 
-
     Column(
         modifier = modifier
             .fillMaxSize()
