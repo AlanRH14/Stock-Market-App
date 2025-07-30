@@ -5,15 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CompanyInfoViewModel @Inject constructor(
+class CompanyInfoViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val repository: StockRepository
 ) : ViewModel() {
