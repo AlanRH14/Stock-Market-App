@@ -36,7 +36,6 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 hilt-androidx-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose",  version.ref = "hiltAndroidxNavigationCompose"}
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion"}
-
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
