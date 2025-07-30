@@ -52,4 +52,6 @@ val appModule = module {
             DB_NAME
         ).build()
     }
+
+    single { get<StockDatabase>().stockDao() }
 }
