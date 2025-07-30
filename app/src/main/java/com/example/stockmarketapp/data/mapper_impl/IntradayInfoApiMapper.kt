@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class IntradayInfoDomainMapper : ApiMapper<IntradayInfoDto, IntradayInfo> {
+class IntradayInfoApiMapper : ApiMapper<IntradayInfoDto, IntradayInfo> {
 
     override fun mapToDomain(apiDto: IntradayInfoDto): IntradayInfo {
         val pattern = "yyyy-MM-dd HH:mm:ss"
