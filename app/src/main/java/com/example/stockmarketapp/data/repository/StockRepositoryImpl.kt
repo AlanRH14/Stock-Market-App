@@ -1,6 +1,7 @@
 package com.example.stockmarketapp.data.repository
 
 import com.example.stockmarketapp.data.csv.CSVParser
+import com.example.stockmarketapp.data.local.StockDao
 import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.mapper.toCompanyInfo
 import com.example.stockmarketapp.data.mapper.toCompanyListing
@@ -21,12 +22,10 @@ import javax.inject.Singleton
 @Singleton
 class StockRepositoryImpl @Inject constructor(
     private val api: StockApi,
-    private val db: StockDatabase,
+    private val dao: StockDao,
     private val companyListingsParser: CSVParser<CompanyListing>,
     private val intradayInfoParser: CSVParser<IntradayInfo>
 ) : StockRepository {
-
-    private val dao = db.dao
 
     override suspend fun getCompanyListing(
         fetchFromRemote: Boolean,

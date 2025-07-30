@@ -11,27 +11,15 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.koin.dsl.module
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+val repositoryModule = module {
+    single<CSVParser<CompanyListing>> { CompanyListingsParser() }
 
-    @Binds
-    @Singleton
-    abstract fun bindCompanyListingsParser(
-        companyListingsParser: CompanyListingsParser
-    ): CSVParser<CompanyListing>
+    single<CSVParser<IntradayInfo>> { IntradayInfoParser() }
 
-    @Binds
-    @Singleton
-    abstract fun bindIntradayInfoParser(
-        intradayInfo: IntradayInfoParser
-    ): CSVParser<IntradayInfo>
+    single<StockRepository> { StockRepositoryImpl(
 
-    @Binds
-    @Singleton
-    abstract fun bindStockRepository(
-        stockRepositoryImpl: StockRepositoryImpl
-    ): StockRepository
+    ) }
 }
