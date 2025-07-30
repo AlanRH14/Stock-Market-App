@@ -60,21 +60,20 @@ class CompanyListingsViewModel(
 
                         is Resource.Success -> {
                             result.data?.let { listings ->
-                                _state.update {
-                                    it.copy(
-                                        isLoading = false,
-                                        companies = listings
-                                    )
-                                }
+                                _state.update { it.copy(companies = listings) }
                             }
                         }
 
-                        is Resource.Error -> _state.update {
-                            it.copy(isLoading = false)
+                        is Resource.Error -> {
+                            _state.update { it.copy(isLoading = false) }
                         }
                     }
                 }
         }
+    }
+
+    fun updateRefresh(refresh: Boolean) {
+        _state.value = _state.value.copy(isRefreshing = refresh)
     }
 
     private fun navigateToCompanyInfo(symbol: String) {
