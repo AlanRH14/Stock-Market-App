@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.data.mapper
+package com.example.stockmarketapp.data.mapper_impl
 
 import com.example.stockmarketapp.data.remote.dto.IntradayInfoDto
 import com.example.stockmarketapp.domain.model.IntradayInfo
