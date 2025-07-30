@@ -6,7 +6,9 @@ import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -15,6 +17,10 @@ class CompanyListingsViewModel(
 ) : ViewModel() {
     private val _state = MutableStateFlow(CompanyListingsState())
     val state = _state.asStateFlow()
+
+    private val _effect = MutableSharedFlow<CompanyListingEffect>()
+    val effect = _effect.asSharedFlow()
+
     private var searchJob: Job? = null
 
     fun onEvent(event: CompanyListingsEvent) {
