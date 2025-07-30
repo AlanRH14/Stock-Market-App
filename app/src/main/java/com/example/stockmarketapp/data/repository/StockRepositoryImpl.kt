@@ -1,11 +1,11 @@
 package com.example.stockmarketapp.data.repository
 
+import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.common.CSVParser
+import com.example.stockmarketapp.data.local.CompanyListingEntity
 import com.example.stockmarketapp.data.local.StockDao
-import com.example.stockmarketapp.data.mapper.toCompanyInfo
-import com.example.stockmarketapp.data.mapper.toCompanyListing
-import com.example.stockmarketapp.data.mapper.toCompanyListingEntity
 import com.example.stockmarketapp.data.remote.api.StockApi
+import com.example.stockmarketapp.data.remote.dto.CompanyInfoDto
 import com.example.stockmarketapp.domain.CompanyInfo
 import com.example.stockmarketapp.domain.model.CompanyListing
 import com.example.stockmarketapp.domain.model.IntradayInfo
@@ -20,7 +20,10 @@ class StockRepositoryImpl(
     private val api: StockApi,
     private val dao: StockDao,
     private val companyListingsParser: CSVParser<CompanyListing>,
-    private val intradayInfoParser: CSVParser<IntradayInfo>
+    private val intradayInfoParser: CSVParser<IntradayInfo>,
+    private val companyEntityMapper: ApiMapper<CompanyListingEntity, CompanyListing>,
+    private val companyDomainMapper: ApiMapper<CompanyListing, CompanyListingEntity>,
+    private val companyInfoApiMapper: ApiMapper<CompanyInfoDto, CompanyInfo>
 ) : StockRepository {
 
     override suspend fun getCompanyListing(
@@ -30,11 +33,7 @@ class StockRepositoryImpl(
         return flow {
             emit(Resource.Loading(isLoading = true))
             val localListings = dao.searchCompanyListing(query = query)
-            emit(
-                Resource.Success(
-                    data = localListings.map { it.toCompanyListing() }
-                )
-            )
+            emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))
 
             val isDbEmpty = localListings.isEmpty() && query.isBlank()
             val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
@@ -58,13 +57,13 @@ class StockRepositoryImpl(
             remoteListings?.let { listings ->
                 dao.clearCompanyListings()
                 dao.insertCompanyListings(
-                    listings.map { it.toCompanyListingEntity() }
+                    listings.map { companyDomainMapper.mapToDomain(it) }
                 )
                 emit(
                     Resource.Success(
                         data = dao
                             .searchCompanyListing("")
-                            .map { it.toCompanyListing() }
+                            .map { companyEntityMapper.mapToDomain(it) }
                     ))
                 emit(Resource.Loading(false))
             }
@@ -94,7 +93,7 @@ class StockRepositoryImpl(
     override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo> {
         return try {
             val response = api.getCompanyInfo(symbol = symbol)
-            Resource.Success(response.toCompanyInfo())
+            Resource.Success(companyInfoApiMapper.mapToDomain(response))
         } catch (e: IOException) {
             e.printStackTrace()
             Resource.Error(

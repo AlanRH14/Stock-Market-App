@@ -1,7 +1,7 @@
 package com.example.stockmarketapp.data.csv
 
+import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.common.CSVParser
-import com.example.stockmarketapp.data.mapper.toIntradayInfo
 import com.example.stockmarketapp.data.remote.dto.IntradayInfoDto
 import com.example.stockmarketapp.domain.model.IntradayInfo
 import com.opencsv.CSVReader
@@ -11,7 +11,9 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.Calendar
 
-class IntradayInfoParser : CSVParser<IntradayInfo> {
+class IntradayInfoParser(
+    private val intradayInfoApiMapper: ApiMapper<IntradayInfoDto, IntradayInfo>
+) : CSVParser<IntradayInfo> {
     private val calendar = Calendar.getInstance()
     private val previousDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).minus(1)
 
@@ -28,7 +30,7 @@ class IntradayInfoParser : CSVParser<IntradayInfo> {
                         timestamp = timestamp,
                         close = close.toDouble(),
                     )
-                    dto.toIntradayInfo()
+                    intradayInfoApiMapper.mapToDomain(dto)
                 }
                 .filter { info ->
                     calendar.time = info.date
