@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.stockmarketapp.R
 import com.example.stockmarketapp.navigation.Screen
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -36,6 +38,16 @@ fun CompanyListingsScreen(
 ) {
     val swipeRefresh = rememberPullToRefreshState()
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.onEvent(event = CompanyListingsEvent.OnGetCompanyListings)
+        viewModel.effect.collectLatest { effect ->
+            when (effect) {
+                is CompanyListingsEffect.NavigateToCompanyInfo -> Unit
+            }
+        }
+    }
+
     val coroutineScope = rememberCoroutineScope()
     val onRefresh: () -> Unit = {
         viewModel.updateRefresh(refresh = true)

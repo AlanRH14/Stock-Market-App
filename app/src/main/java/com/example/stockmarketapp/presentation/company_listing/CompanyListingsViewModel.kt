@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,7 +49,7 @@ class CompanyListingsViewModel(
         fetchFromRemote: Boolean = false,
         query: String = _state.value.searchQuery.lowercase(),
     ) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getCompanyListing(fetchFromRemote = fetchFromRemote, query = query)
                 .collect { result ->
                     when (result) {
