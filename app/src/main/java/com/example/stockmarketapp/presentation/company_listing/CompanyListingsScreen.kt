@@ -52,7 +52,14 @@ fun CompanyListingsScreen(
         viewModel.onEvent(event = CompanyListingsEvent.OnGetCompanyListings)
         viewModel.effect.collectLatest { effect ->
             when (effect) {
-                is CompanyListingsEffect.NavigateToCompanyInfo -> Unit
+                is CompanyListingsEffect.NavigateToCompanyInfo -> {
+                    navigation.navigate(
+                        route = "${Screen.CompanyInfo.route}/{symbol}".replace(
+                            oldValue = "{symbol}",
+                            newValue = effect.symbol
+                        )
+                    )
+                }
             }
         }
     }
@@ -96,12 +103,7 @@ fun CompanyListingsScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clickable {
-                                navigation.navigate(
-                                    route = "${Screen.CompanyInfo.route}/{symbol}".replace(
-                                        oldValue = "{symbol}",
-                                        newValue = company.symbol
-                                    )
-                                )
+                                viewModel.onEvent(CompanyListingsEvent.OnCompanyItemClicked(company.symbol))
                             },
                         company = company
                     )
