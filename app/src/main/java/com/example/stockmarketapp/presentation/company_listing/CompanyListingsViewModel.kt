@@ -25,11 +25,14 @@ class CompanyListingsViewModel(
 
     private var searchJob: Job? = null
 
-    fun onEvent(event: CompanyListingsEvent) {
+    fun onEvent(event: CompanyListingsUIEvent) {
         when (event) {
-            is CompanyListingsEvent.OnRefresh -> getCompanyListings(fetchFromRemote = true)
+            is CompanyListingsUIEvent.OnRefresh -> {
+                _state.update { it.copy(isRefreshing = true) }
+                getCompanyListings(fetchFromRemote = true)
+            }
 
-            is CompanyListingsEvent.OnSearchQueryChange -> {
+            is CompanyListingsUIEvent.OnSearchQueryChange -> {
                 _state.update { it.copy(searchQuery = event.query) }
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
@@ -38,9 +41,9 @@ class CompanyListingsViewModel(
                 }
             }
 
-            is CompanyListingsEvent.OnGetCompanyListings -> getCompanyListings()
+            is CompanyListingsUIEvent.OnGetCompanyListingsUI -> getCompanyListings()
 
-            is CompanyListingsEvent.OnCompanyItemClicked -> navigateToCompanyInfo(symbol = event.symbol)
+            is CompanyListingsUIEvent.OnCompanyItemClickedUI -> navigateToCompanyInfo(symbol = event.symbol)
         }
     }
 
@@ -58,7 +61,13 @@ class CompanyListingsViewModel(
 
                         is Resource.Success -> {
                             result.data?.let { listings ->
-                                _state.update { it.copy(companies = listings) }
+                                _state.update {
+                                    it.copy(
+                                        isLoading = false,
+                                        companies = listings,
+                                        isRefreshing = false
+                                    )
+                                }
                             }
                         }
 
@@ -68,10 +77,6 @@ class CompanyListingsViewModel(
                     }
                 }
         }
-    }
-
-    fun updateRefresh(refresh: Boolean) {
-        _state.value = _state.value.copy(isRefreshing = refresh)
     }
 
     private fun navigateToCompanyInfo(symbol: String) {
