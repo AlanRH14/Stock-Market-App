@@ -41,7 +41,7 @@ fun CompanyListingsScreen(
         viewModel.updateRefresh(refresh = true)
         coroutineScope.launch {
             delay(500)
-            viewModel.onEvent(CompanyListingsEvent.Refresh)
+            viewModel.onEvent(CompanyListingsEvent.OnRefresh)
             viewModel.updateRefresh(refresh = false)
         }
     }

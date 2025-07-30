@@ -25,7 +25,7 @@ class CompanyListingsViewModel(
 
     fun onEvent(event: CompanyListingsEvent) {
         when (event) {
-            is CompanyListingsEvent.Refresh -> {
+            is CompanyListingsEvent.OnRefresh -> {
                 getCompanyListings(fetchFromRemote = true)
             }
 
