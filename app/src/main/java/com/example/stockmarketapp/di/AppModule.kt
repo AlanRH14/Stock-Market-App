@@ -6,47 +6,52 @@ import com.example.stockmarketapp.data.local.StockDatabase
 import com.example.stockmarketapp.data.remote.api.ApiConstants.BASE_URL
 import com.example.stockmarketapp.data.remote.api.StockApi
 import com.example.stockmarketapp.domain.utils.Constants.DB_NAME
-import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
-import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+private val json = Json {
+    coerceInputValues = true
+    ignoreUnknownKeys = true
+}
 
-    private val json = Json {
-        coerceInputValues = true
-        ignoreUnknownKeys = true
+private val contentType = "application/json".toMediaType()
+
+val appModule = module {
+    single {
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
     }
 
-    private val contentType = "application/json".toMediaType()
+    single {
+        OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
+            .build()
+    }
 
-    @Provides
-    @Singleton
-    fun providesRetrofit(): Retrofit =
+    single {
         Retrofit
             .Builder()
             .baseUrl(BASE_URL)
+            .client(get<OkHttpClient>())
             .addConverterFactory(json.asConverterFactory(contentType = contentType))
             .build()
+    }
 
-    @Provides
-    @Singleton
-    fun providesStockApi(retrofit: Retrofit): StockApi =
-        retrofit.create(StockApi::class.java)
+    single { get<Retrofit>().create(StockApi::class.java) }
 
-    @Provides
-    @Singleton
-    fun providesStockDatabase(app: Application): StockDatabase =
+    single {
         Room.databaseBuilder(
-            app,
+            androidContext(),
             StockDatabase::class.java,
             DB_NAME
         ).build()
+    }
 }
