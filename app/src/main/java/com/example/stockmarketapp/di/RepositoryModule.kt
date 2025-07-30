@@ -19,7 +19,12 @@ val repositoryModule = module {
 
     single<CSVParser<IntradayInfo>> { IntradayInfoParser() }
 
-    single<StockRepository> { StockRepositoryImpl(
-
-    ) }
+    single<StockRepository> {
+        StockRepositoryImpl(
+            api = get(),
+            dao = get(),
+            companyListingsParser = get(),
+            intradayInfoParser = get()
+        )
+    }
 }
