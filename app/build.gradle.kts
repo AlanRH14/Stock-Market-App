@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -62,19 +61,23 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.hilt.androidx.navigation.compose)
-    implementation(libs.hilt.android)
+
+    implementation(libs.androidx.navigation.compose)
+
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+
     implementation(libs.room.android)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+
     implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp)
+
     implementation(libs.kotlin.serialization)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.converter.kotlinx.serialization)
-    implementation(libs.logging.interceptor)
-    implementation(libs.okhttp)
+
     implementation(libs.open.csv)
 }

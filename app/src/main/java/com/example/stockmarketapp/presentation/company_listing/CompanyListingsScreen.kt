@@ -19,20 +19,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
 import com.example.stockmarketapp.navigation.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompanyListingsScreen(
     modifier: Modifier = Modifier,
     navigation: NavController,
-    viewModel: CompanyListingsViewModel = hiltViewModel()
+    viewModel: CompanyListingsViewModel = koinViewModel()
 ) {
     val swipeRefresh = rememberPullToRefreshState()
     val state by viewModel.state.collectAsStateWithLifecycle()
