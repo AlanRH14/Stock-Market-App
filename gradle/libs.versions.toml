@@ -15,8 +15,7 @@ hiltVersion = "2.57"
 retrofitVersion = "3.0.0"
 okhttpVersion = "5.1.0"
 roomVersion = "2.7.2"
-moshiConverter = "3.0.0"
-moshiKotlin = "1.15.2"
+kotlinxSerialization = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
