@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
 import com.example.stockmarketapp.navigation.Screen
+import com.example.stockmarketapp.presentation.company_listing.mvi.CompanyListingsEffect
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
