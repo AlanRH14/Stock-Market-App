@@ -39,7 +39,6 @@ class CompanyInfoViewModel(
                     _state.update {
                         it.copy(
                             company = result.data,
-                            isLoading = false,
                             error = null,
                         )
                     }
