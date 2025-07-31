@@ -2,9 +2,9 @@ package com.example.stockmarketapp.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed interface Screen {
+sealed interface Route {
     @Serializable
-    data object CompanyListings: Screen
+    data object CompanyListings: Route
     @Serializable
-    data object CompanyInfo: Screen
+    data object CompanyInfo: Route
 }

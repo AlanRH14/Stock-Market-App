@@ -16,16 +16,16 @@ fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.CompanyListings.route
+        startDestination = Route.CompanyListings.route
     ) {
-        composable(Screen.CompanyListings.route) {
+        composable(Route.CompanyListings.route) {
             CompanyListingsScreen(
                 modifier = modifier,
                 navigation = navController
             )
         }
 
-        composable("${Screen.CompanyInfo.route}/{symbol}") {
+        composable("${Route.CompanyInfo.route}/{symbol}") {
             CompanyInfoScreen(modifier = modifier)
         }
     }

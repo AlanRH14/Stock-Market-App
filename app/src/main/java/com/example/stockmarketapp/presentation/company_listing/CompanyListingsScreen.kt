@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.stockmarketapp.R
-import com.example.stockmarketapp.navigation.Screen
+import com.example.stockmarketapp.navigation.Route
 import com.example.stockmarketapp.presentation.company_listing.mvi.CompanyListingsEffect
 import com.example.stockmarketapp.presentation.company_listing.mvi.CompanyListingsUIEvent
 import kotlinx.coroutines.flow.collectLatest
@@ -47,7 +47,7 @@ fun CompanyListingsScreen(
             when (effect) {
                 is CompanyListingsEffect.NavigateToCompanyInfo -> {
                     navigation.navigate(
-                        route = "${Screen.CompanyInfo.route}/{symbol}".replace(
+                        route = "${Route.CompanyInfo.route}/{symbol}".replace(
                             oldValue = "{symbol}",
                             newValue = effect.symbol
                         )
