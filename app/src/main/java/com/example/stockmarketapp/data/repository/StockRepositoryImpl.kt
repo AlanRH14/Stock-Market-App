@@ -95,21 +95,26 @@ class StockRepositoryImpl(
         }
     }
 
-    override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo> {
-        return try {
+    override fun getCompanyInfo(symbol: String): Flow<Resource<CompanyInfo>> = flow {
+        emit(Resource.Loading())
+        try {
             val response = api.getCompanyInfo(symbol = symbol)
-            Resource.Success(companyInfoApiMapper.mapToDomain(response))
+            emit(Resource.Success(companyInfoApiMapper.mapToDomain(response)))
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.Error(
-                data = null,
-                message = "Couldn't load company info"
+            emit(
+                Resource.Error(
+                    data = null,
+                    message = "Couldn't load company info"
+                )
             )
         } catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Error(
-                data = null,
-                message = "Couldn't load company info"
+            emit(
+                Resource.Error(
+                    data = null,
+                    message = "Couldn't load company info"
+                )
             )
         }
     }
