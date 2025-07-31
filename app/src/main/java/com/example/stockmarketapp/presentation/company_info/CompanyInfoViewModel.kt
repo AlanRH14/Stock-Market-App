@@ -61,7 +61,6 @@ class CompanyInfoViewModel(
 
     private fun getIntradayInfo(symbol: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _state.value = _state.value.copy(isLoading = true)
              repository.getIntradayInfo(symbol = symbol).collect { result ->
                  when (result) {
                      is Resource.Loading -> {
