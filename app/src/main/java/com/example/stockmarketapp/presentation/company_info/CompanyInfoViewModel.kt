@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
 import com.example.stockmarketapp.presentation.company_info.mvi.CompanyInfoState
+import com.example.stockmarketapp.presentation.company_info.mvi.CompanyInfoUIEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
