@@ -1,6 +1,5 @@
 package com.example.stockmarketapp.data.repository
 
-import android.util.Log
 import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.common.CSVParser
 import com.example.stockmarketapp.data.local.CompanyListingEntity
@@ -15,8 +14,6 @@ import com.example.stockmarketapp.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import okio.IOException
-import retrofit2.HttpException
 
 class StockRepositoryImpl(
     private val api: StockApi,
