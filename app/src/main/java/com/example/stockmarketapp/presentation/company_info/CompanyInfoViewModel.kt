@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CompanyInfoViewModel(
@@ -29,23 +30,29 @@ class CompanyInfoViewModel(
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
             when (val result = companyResult.await()) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(
-                        company = result.data,
-                        isLoading = false,
-                        error = null,
-                    )
+                    _state.update {
+                        it.copy(
+                            company = result.data,
+                            isLoading = false,
+                            error = null,
+                        )
+                    }
                 }
 
                 is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        error = result.message,
-                        isLoading = false,
-                        company = null,
-                    )
+                    _state.update {
+                        it.copy(
+                            error = result.message,
+                            isLoading = false,
+                            company = null,
+                        )
+                    }
                 }
-
-                else -> Unit
             }
         }
     }
