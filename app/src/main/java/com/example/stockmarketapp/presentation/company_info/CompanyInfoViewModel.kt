@@ -29,7 +29,6 @@ class CompanyInfoViewModel(
 
     private fun getCompanyInfo() {
         viewModelScope.launch(Dispatchers.IO) {
-            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
             when (val result = companyResult.await()) {
                 is Resource.Loading -> {
@@ -61,7 +60,6 @@ class CompanyInfoViewModel(
 
     private fun getIntradayInfo() {
         viewModelScope.launch(Dispatchers.IO) {
-            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             _state.value = _state.value.copy(isLoading = true)
             val intradayInfoResult = async { repository.getIntradayInfo(symbol = symbol) }
 
