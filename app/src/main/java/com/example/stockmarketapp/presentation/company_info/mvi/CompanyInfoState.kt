@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.presentation.company_info
+package com.example.stockmarketapp.presentation.company_info.mvi
 
 import com.example.stockmarketapp.domain.CompanyInfo
 import com.example.stockmarketapp.domain.model.IntradayInfo

@@ -44,7 +44,7 @@ class CompanyListingsViewModel(
                 }
             }
 
-            is CompanyListingsUIEvent.OnGetCompanyListingsUI -> getCompanyListings()
+            is CompanyListingsUIEvent.OnGetCompanyListings -> getCompanyListings()
 
             is CompanyListingsUIEvent.OnCompanyItemClickedUI -> navigateToCompanyInfo(symbol = event.symbol)
         }
@@ -59,7 +59,7 @@ class CompanyListingsViewModel(
                 .collect { result ->
                     when (result) {
                         is Resource.Loading -> {
-                            _state.update { it.copy(isLoading = result.isLoading) }
+                            _state.update { it.copy(isLoading = true) }
                         }
 
                         is Resource.Success -> {

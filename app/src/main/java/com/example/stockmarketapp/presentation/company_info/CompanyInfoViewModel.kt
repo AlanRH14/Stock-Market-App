@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
+import com.example.stockmarketapp.presentation.company_info.mvi.CompanyInfoState
+import com.example.stockmarketapp.presentation.company_info.mvi.CompanyInfoUIEvent
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -29,29 +30,29 @@ class CompanyInfoViewModel(
 
     private fun getCompanyInfo(symbol: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
-            when (val result = companyResult.await()) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
-
-                is Resource.Success -> {
-                    _state.update {
-                        it.copy(
-                            company = result.data,
-                            isLoading = false,
-                            error = null,
-                        )
+            repository.getCompanyInfo(symbol = symbol).collect { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
                     }
-                }
 
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            error = result.message,
-                            isLoading = false,
-                            company = null,
-                        )
+                    is Resource.Success -> {
+                        _state.update {
+                            it.copy(
+                                company = result.data,
+                                error = null,
+                            )
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _state.update {
+                            it.copy(
+                                error = result.message,
+                                isLoading = false,
+                                company = null,
+                            )
+                        }
                     }
                 }
             }
@@ -60,34 +61,33 @@ class CompanyInfoViewModel(
 
     private fun getIntradayInfo(symbol: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _state.value = _state.value.copy(isLoading = true)
-            val intradayInfoResult = async { repository.getIntradayInfo(symbol = symbol) }
+             repository.getIntradayInfo(symbol = symbol).collect { result ->
+                 when (result) {
+                     is Resource.Loading -> {
+                         _state.update { it.copy(isLoading = true) }
+                     }
 
-            when (val result = intradayInfoResult.await()) {
-                is Resource.Loading -> {
-                    _state.update { it.copy(isLoading = true) }
-                }
+                     is Resource.Success -> {
+                         _state.update {
+                             it.copy(
+                                 stockInfo = result.data ?: emptyList(),
+                                 isLoading = false,
+                                 error = null,
+                             )
+                         }
+                     }
 
-                is Resource.Success -> {
-                    _state.update {
-                        it.copy(
-                            stockInfo = result.data ?: emptyList(),
-                            isLoading = false,
-                            error = null,
-                        )
-                    }
-                }
-
-                is Resource.Error -> {
-                    _state.update {
-                        it.copy(
-                            error = result.message,
-                            isLoading = false,
-                            company = null,
-                        )
-                    }
-                }
-            }
+                     is Resource.Error -> {
+                         _state.update {
+                             it.copy(
+                                 error = result.message,
+                                 isLoading = false,
+                                 company = null,
+                             )
+                         }
+                     }
+                 }
+             }
         }
     }
 }
