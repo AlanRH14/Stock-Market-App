@@ -31,7 +31,7 @@ class StockRepositoryImpl(
         fetchFromRemote: Boolean,
         query: String
     ): Flow<Resource<List<CompanyListing>>> = flow {
-        emit(Resource.Loading(isLoading = true))
+        emit(Resource.Loading())
         try {
             val localListings = dao.searchCompanyListing(query = query)
             emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))

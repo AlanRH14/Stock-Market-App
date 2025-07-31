@@ -59,7 +59,8 @@ class CompanyListingsViewModel(
                 .collect { result ->
                     when (result) {
                         is Resource.Loading -> {
-                            _state.update { it.copy(isLoading = result.isLoading) }
+                            delay(300L)
+                            _state.update { it.copy(isLoading = true) }
                         }
 
                         is Resource.Success -> {
