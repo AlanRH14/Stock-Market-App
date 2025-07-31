@@ -31,6 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CompanyInfoScreen(
     modifier: Modifier = Modifier,
+    symbol: String,
     viewModel: CompanyInfoViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsState()

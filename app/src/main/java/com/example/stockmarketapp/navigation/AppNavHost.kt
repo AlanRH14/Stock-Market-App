@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.example.stockmarketapp.presentation.company_info.CompanyInfoScreen
 import com.example.stockmarketapp.presentation.company_listing.CompanyListingsScreen
 
@@ -16,17 +17,21 @@ fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Route.CompanyListings.route
+        startDestination = Route.CompanyListings
     ) {
-        composable(Route.CompanyListings.route) {
+        composable<Route.CompanyListings> {
             CompanyListingsScreen(
                 modifier = modifier,
                 navigation = navController
             )
         }
 
-        composable("${Route.CompanyInfo.route}/{symbol}") {
-            CompanyInfoScreen(modifier = modifier)
+        composable<Route.CompanyInfo> { companyInfo ->
+            val symbol = companyInfo.toRoute<Route.CompanyInfo>().symbol
+            CompanyInfoScreen(
+                modifier = modifier,
+                symbol = symbol
+            )
         }
     }
 }
