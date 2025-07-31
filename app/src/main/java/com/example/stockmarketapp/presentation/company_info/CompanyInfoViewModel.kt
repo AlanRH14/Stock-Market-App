@@ -20,12 +20,14 @@ class CompanyInfoViewModel(
     private val _state = MutableStateFlow(CompanyInfoState())
     val state = _state.asStateFlow()
 
-    fun onEvent() {
-
+    fun onEvent(event: CompanyInfoUIEvent) {
+        when (event) {
+            is CompanyInfoUIEvent.OnGetCompanyInfo -> getCompanyInfo()
+            is CompanyInfoUIEvent.OnGetIntradayInfo -> getIntradayInfo()
+        }
     }
 
-
-    fun getCompanyInfo() {
+    private fun getCompanyInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
@@ -57,7 +59,7 @@ class CompanyInfoViewModel(
         }
     }
 
-    fun getIntradayInfo() {
+    private fun getIntradayInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             _state.value = _state.value.copy(isLoading = true)
