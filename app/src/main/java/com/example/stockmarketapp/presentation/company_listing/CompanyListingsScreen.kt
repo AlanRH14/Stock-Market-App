@@ -46,12 +46,7 @@ fun CompanyListingsScreen(
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is CompanyListingsEffect.NavigateToCompanyInfo -> {
-                    navigation.navigate(
-                        route = "${Route.CompanyInfo.route}/{symbol}".replace(
-                            oldValue = "{symbol}",
-                            newValue = effect.symbol
-                        )
-                    )
+                    navigation.navigate(Route.CompanyInfo(symbol = effect.symbol))
                 }
             }
         }
