@@ -25,7 +25,7 @@ class CompanyInfoViewModel(
 
 
     fun getCompanyInfo() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
             when (val result = companyResult.await()) {
