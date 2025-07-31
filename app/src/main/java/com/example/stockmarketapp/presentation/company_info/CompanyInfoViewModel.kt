@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CompanyInfoViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val repository: StockRepository
 ) : ViewModel() {
 
