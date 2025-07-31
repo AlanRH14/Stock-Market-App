@@ -11,6 +11,7 @@ import com.example.stockmarketapp.domain.model.CompanyListing
 import com.example.stockmarketapp.domain.model.IntradayInfo
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
@@ -26,47 +27,46 @@ class StockRepositoryImpl(
     private val companyInfoApiMapper: ApiMapper<CompanyInfoDto, CompanyInfo>
 ) : StockRepository {
 
-    override suspend fun getCompanyListing(
+    override fun getCompanyListing(
         fetchFromRemote: Boolean,
         query: String
-    ): Flow<Resource<List<CompanyListing>>> {
-        return flow {
-            emit(Resource.Loading(isLoading = true))
-            val localListings = dao.searchCompanyListing(query = query)
-            emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))
+    ): Flow<Resource<List<CompanyListing>>> = flow {
+        delay(5000)
+        emit(Resource.Loading(isLoading = true))
+        val localListings = dao.searchCompanyListing(query = query)
+        emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))
 
-            val isDbEmpty = localListings.isEmpty() && query.isBlank()
-            val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
-            if (shouldJustLoadFromCache) {
-                emit(Resource.Loading(isLoading = false))
-                return@flow
-            }
+        val isDbEmpty = localListings.isEmpty() && query.isBlank()
+        val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
+        if (shouldJustLoadFromCache) {
+            emit(Resource.Loading(isLoading = false))
+            return@flow
+        }
 
-            val remoteListings = try {
-                val response = api.getStockListings()
-                companyListingsParser.parse(response.byteStream())
-            } catch (e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error(data = null, message = "Couldn´t load data"))
-                null
-            } catch (e: HttpException) {
-                emit(Resource.Error(data = null, message = "Couldn´t load data"))
-                null
-            }
+        val remoteListings = try {
+            val response = api.getStockListings()
+            companyListingsParser.parse(response.byteStream())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error(data = null, message = "Couldn´t load data"))
+            null
+        } catch (e: HttpException) {
+            emit(Resource.Error(data = null, message = "Couldn´t load data"))
+            null
+        }
 
-            remoteListings?.let { listings ->
-                dao.clearCompanyListings()
-                dao.insertCompanyListings(
-                    listings.map { companyDomainMapper.mapToDomain(it) }
-                )
-                emit(
-                    Resource.Success(
-                        data = dao
-                            .searchCompanyListing("")
-                            .map { companyEntityMapper.mapToDomain(it) }
-                    ))
-                emit(Resource.Loading(false))
-            }
+        remoteListings?.let { listings ->
+            dao.clearCompanyListings()
+            dao.insertCompanyListings(
+                listings.map { companyDomainMapper.mapToDomain(it) }
+            )
+            emit(
+                Resource.Success(
+                    data = dao
+                        .searchCompanyListing("")
+                        .map { companyEntityMapper.mapToDomain(it) }
+                ))
+            emit(Resource.Loading(false))
         }
     }
 
