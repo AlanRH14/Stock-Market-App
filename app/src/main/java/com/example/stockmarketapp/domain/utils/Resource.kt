@@ -1,7 +1,7 @@
 package com.example.stockmarketapp.domain.utils
 
-sealed class Resource<T>(val data: T? = null, val message: String? = null) {
-    class Success<T>(data: T?) : Resource<T>(data = data)
-    class Error<T>(data: T?, message: String) : Resource<T>(data = data, message = message)
-    class Loading<T>(val isLoading: Boolean = true) : Resource<T>(data = null, message = null)
+sealed interface Resource<out T> {
+    data class Success<T>(val data: T?) : Resource<T>
+    data class Error<T>(val data: T?, val message: String) : Resource<T>
+    data object Loading : Resource<Nothing>
 }

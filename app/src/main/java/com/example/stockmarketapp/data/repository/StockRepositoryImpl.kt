@@ -13,6 +13,7 @@ import com.example.stockmarketapp.domain.model.IntradayInfo
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
@@ -31,89 +32,63 @@ class StockRepositoryImpl(
         fetchFromRemote: Boolean,
         query: String
     ): Flow<Resource<List<CompanyListing>>> = flow {
-        emit(Resource.Loading())
-        try {
-            val localListings = dao.searchCompanyListing(query = query)
-            emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))
+        emit(Resource.Loading)
+        val localListings = dao.searchCompanyListing(query = query)
+        emit(Resource.Success(data = localListings.map { companyEntityMapper.mapToDomain(it) }))
 
-            val isDbEmpty = localListings.isEmpty() && query.isBlank()
-            val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
-            if (shouldJustLoadFromCache) {
-                return@flow
-            }
-
-            val remoteListings = try {
-                val response = api.getStockListings()
-                companyListingsParser.parse(response.byteStream())
-            } catch (e: Exception) {
-                Log.e("LordMiau", "Cause: ${e.cause}")
-                Log.e("LordMiau", "Message: ${e.message}")
-                throw Exception("${e.message}")
-            } 
-
-            if (remoteListings.isNotEmpty()){
-                dao.clearCompanyListings()
-                dao.insertCompanyListings(
-                    remoteListings.map { companyDomainMapper.mapToDomain(it) }
-                )
-                emit(
-                    Resource.Success(
-                        data = dao
-                            .searchCompanyListing("")
-                            .map { companyEntityMapper.mapToDomain(it) })
-                )
-            }
-        } catch (e: Exception) {
-            emit(Resource.Error(data = null, message = "Error: ${e.message}"))
+        val isDbEmpty = localListings.isEmpty() && query.isBlank()
+        val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
+        if (shouldJustLoadFromCache) {
+            return@flow
         }
+
+        val remoteListings = try {
+            val response = api.getStockListings()
+            companyListingsParser.parse(response.byteStream())
+        } catch (e: Exception) {
+            throw Exception("${e.message}")
+        }
+
+        if (remoteListings.isNotEmpty()) {
+            dao.clearCompanyListings()
+            dao.insertCompanyListings(
+                remoteListings.map { companyDomainMapper.mapToDomain(it) }
+            )
+            emit(
+                Resource.Success(
+                    data = dao
+                        .searchCompanyListing("")
+                        .map { companyEntityMapper.mapToDomain(it) })
+            )
+        }
+    }.catch { error ->
+        emit(Resource.Error(data = null, message = "Error: ${error.message}"))
     }
 
     override fun getIntradayInfo(symbol: String): Flow<Resource<List<IntradayInfo>>> = flow {
-        emit(Resource.Loading())
-        try {
-            val response = api.getIntradayInfo(symbol = symbol)
-            val result = intradayInfoParser.parse(response.byteStream())
-            emit(Resource.Success(data = result))
-        } catch (e: IOException) {
-            e.printStackTrace()
-            emit(
-                Resource.Error(
-                    data = null,
-                    message = "Couldn't load intraday info"
-                )
+        emit(Resource.Loading)
+        val response = api.getIntradayInfo(symbol = symbol)
+        val result = intradayInfoParser.parse(response.byteStream())
+        emit(Resource.Success(data = result))
+    }.catch { error ->
+        emit(
+            Resource.Error(
+                data = null,
+                message = "Error: ${error.message}"
             )
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            emit(
-                Resource.Error(
-                    data = null,
-                    message = "Couldn't load intraday info"
-                )
-            )
-        }
+        )
     }
 
     override fun getCompanyInfo(symbol: String): Flow<Resource<CompanyInfo>> = flow {
-        emit(Resource.Loading())
-        try {
-            val response = api.getCompanyInfo(symbol = symbol)
-            emit(Resource.Success(companyInfoApiMapper.mapToDomain(response)))
-        } catch (e: IOException) {
-            e.printStackTrace()
-            emit(
-                Resource.Error(
-                    data = null,
-                    message = "Couldn't load company info"
-                )
+        emit(Resource.Loading)
+        val response = api.getCompanyInfo(symbol = symbol)
+        emit(Resource.Success(companyInfoApiMapper.mapToDomain(response)))
+    }.catch { error ->
+        emit(
+            Resource.Error(
+                data = null,
+                message = "Error: ${error.message}"
             )
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            emit(
-                Resource.Error(
-                    data = null,
-                    message = "Couldn't load company info"
-                )
-            )
-        }
+        )
     }
 }
