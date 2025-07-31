@@ -64,6 +64,10 @@ class CompanyInfoViewModel(
             val intradayInfoResult = async { repository.getIntradayInfo(symbol = symbol) }
 
             when (val result = intradayInfoResult.await()) {
+                is Resource.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
                         stockInfo = result.data ?: emptyList(),
