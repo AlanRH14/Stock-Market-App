@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.presentation.company_listing
+package com.example.stockmarketapp.presentation.company_listing.mvi
 
 sealed interface CompanyListingsUIEvent {
     data object OnRefresh : CompanyListingsUIEvent

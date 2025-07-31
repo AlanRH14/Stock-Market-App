@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.presentation.company_listing
+package com.example.stockmarketapp.presentation.company_listing.mvi
 
 import com.example.stockmarketapp.domain.model.CompanyListing
 
