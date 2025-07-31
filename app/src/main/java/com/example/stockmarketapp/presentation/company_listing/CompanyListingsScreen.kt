@@ -42,7 +42,7 @@ fun CompanyListingsScreen(
     }
 
     LaunchedEffect(key1 = true) {
-        viewModel.onEvent(event = CompanyListingsUIEvent.OnGetCompanyListingsUI)
+        viewModel.onEvent(event = CompanyListingsUIEvent.OnGetCompanyListings)
         viewModel.effect.collectLatest { effect ->
             when (effect) {
                 is CompanyListingsEffect.NavigateToCompanyInfo -> {

@@ -44,7 +44,7 @@ class CompanyListingsViewModel(
                 }
             }
 
-            is CompanyListingsUIEvent.OnGetCompanyListingsUI -> getCompanyListings()
+            is CompanyListingsUIEvent.OnGetCompanyListings -> getCompanyListings()
 
             is CompanyListingsUIEvent.OnCompanyItemClickedUI -> navigateToCompanyInfo(symbol = event.symbol)
         }
