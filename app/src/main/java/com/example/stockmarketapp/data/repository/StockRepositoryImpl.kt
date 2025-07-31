@@ -70,22 +70,27 @@ class StockRepositoryImpl(
         }
     }
 
-    override suspend fun getIntradayInfo(symbol: String): Resource<List<IntradayInfo>> {
-        return try {
+    override fun getIntradayInfo(symbol: String): Flow<Resource<List<IntradayInfo>>> = flow {
+        emit(Resource.Loading())
+        try {
             val response = api.getIntradayInfo(symbol = symbol)
             val result = intradayInfoParser.parse(response.byteStream())
-            Resource.Success(data = result)
+            emit(Resource.Success(data = result))
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.Error(
-                data = null,
-                message = "Couldn't load intraday info"
+            emit(
+                Resource.Error(
+                    data = null,
+                    message = "Couldn't load intraday info"
+                )
             )
         } catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Error(
-                data = null,
-                message = "Couldn't load intraday info"
+            emit(
+                Resource.Error(
+                    data = null,
+                    message = "Couldn't load intraday info"
+                )
             )
         }
     }
