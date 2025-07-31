@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
 import com.example.stockmarketapp.domain.utils.Resource
 import com.example.stockmarketapp.presentation.company_listing.mvi.CompanyListingsEffect
+import com.example.stockmarketapp.presentation.company_listing.mvi.CompanyListingsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
