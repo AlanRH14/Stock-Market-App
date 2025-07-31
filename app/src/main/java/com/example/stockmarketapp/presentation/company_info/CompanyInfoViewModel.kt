@@ -1,6 +1,5 @@
 package com.example.stockmarketapp.presentation.company_info
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stockmarketapp.domain.repository.StockRepository
@@ -21,8 +20,10 @@ class CompanyInfoViewModel(
 
     fun onEvent(event: CompanyInfoUIEvent) {
         when (event) {
-            is CompanyInfoUIEvent.OnGetCompanyInfo -> getCompanyInfo(symbol = event.symbol)
-            is CompanyInfoUIEvent.OnGetIntradayInfo -> getIntradayInfo(symbol = event.symbol)
+            is CompanyInfoUIEvent.OnInit -> {
+                getCompanyInfo(symbol = event.symbol)
+                getIntradayInfo(symbol = event.symbol)
+            }
         }
     }
 
