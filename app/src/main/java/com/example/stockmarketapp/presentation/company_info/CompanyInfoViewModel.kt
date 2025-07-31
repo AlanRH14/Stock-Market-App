@@ -69,22 +69,24 @@ class CompanyInfoViewModel(
                 }
 
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(
-                        stockInfo = result.data ?: emptyList(),
-                        isLoading = false,
-                        error = null,
-                    )
+                    _state.update {
+                        it.copy(
+                            stockInfo = result.data ?: emptyList(),
+                            isLoading = false,
+                            error = null,
+                        )
+                    }
                 }
 
                 is Resource.Error -> {
-                    _state.value = _state.value.copy(
-                        error = result.message,
-                        isLoading = false,
-                        company = null,
-                    )
+                    _state.update {
+                        it.copy(
+                            error = result.message,
+                            isLoading = false,
+                            company = null,
+                        )
+                    }
                 }
-
-                else -> Unit
             }
         }
     }
