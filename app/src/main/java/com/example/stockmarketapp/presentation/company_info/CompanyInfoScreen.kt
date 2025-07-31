@@ -37,8 +37,8 @@ fun CompanyInfoScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(key1 = true) {
-        viewModel.onEvent(CompanyInfoUIEvent.OnGetCompanyInfo)
-        viewModel.onEvent(CompanyInfoUIEvent.OnGetIntradayInfo)
+        viewModel.onEvent(CompanyInfoUIEvent.OnGetCompanyInfo(symbol = symbol))
+        viewModel.onEvent(CompanyInfoUIEvent.OnGetIntradayInfo(symbol = symbol))
     }
 
     if (state.error == null) {
