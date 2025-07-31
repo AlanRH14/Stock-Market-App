@@ -9,7 +9,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val csvParserModule = module {
-    single<CSVParser<CompanyListing>> { CompanyListingsParser() }
+    single<CSVParser<CompanyListing>>(named("CompanyListingsParser")) { CompanyListingsParser() }
 
-    single<CSVParser<IntradayInfo>> { IntradayInfoParser(get(named("IntradayInfoApiMapper"))) }
+    single<CSVParser<IntradayInfo>>(named("IntradayInfoParser")) { IntradayInfoParser(get(named("IntradayInfoApiMapper"))) }
 }

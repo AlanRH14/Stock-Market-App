@@ -10,8 +10,8 @@ val repositoryModule = module {
         StockRepositoryImpl(
             api = get(),
             dao = get(),
-            companyListingsParser = get(),
-            intradayInfoParser = get(),
+            companyListingsParser = get(named("CompanyListingsParser")),
+            intradayInfoParser = get(named("IntradayInfoParser")),
             companyEntityMapper = get(named("CompanyEntityMapper")),
             companyDomainMapper = get(named("CompanyDomainMapper")),
             companyInfoApiMapper = get(named("CompanyInfoApiMapper"))

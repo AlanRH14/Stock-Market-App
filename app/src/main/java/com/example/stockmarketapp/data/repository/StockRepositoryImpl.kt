@@ -1,5 +1,6 @@
 package com.example.stockmarketapp.data.repository
 
+import android.util.Log
 import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.common.CSVParser
 import com.example.stockmarketapp.data.local.CompanyListingEntity
@@ -38,7 +39,6 @@ class StockRepositoryImpl(
             val isDbEmpty = localListings.isEmpty() && query.isBlank()
             val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
             if (shouldJustLoadFromCache) {
-                emit(Resource.Loading(isLoading = false))
                 return@flow
             }
 
@@ -46,6 +46,8 @@ class StockRepositoryImpl(
                 val response = api.getStockListings()
                 companyListingsParser.parse(response.byteStream())
             } catch (e: Exception) {
+                Log.e("LordMiau", "Cause: ${e.cause}")
+                Log.e("LordMiau", "Message: ${e.message}")
                 throw Exception("${e.message}")
             } 
 
