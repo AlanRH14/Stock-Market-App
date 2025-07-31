@@ -22,12 +22,12 @@ class CompanyInfoViewModel(
 
     fun onEvent(event: CompanyInfoUIEvent) {
         when (event) {
-            is CompanyInfoUIEvent.OnGetCompanyInfo -> getCompanyInfo()
-            is CompanyInfoUIEvent.OnGetIntradayInfo -> getIntradayInfo()
+            is CompanyInfoUIEvent.OnGetCompanyInfo -> getCompanyInfo(symbol = event.symbol)
+            is CompanyInfoUIEvent.OnGetIntradayInfo -> getIntradayInfo(symbol = event.symbol)
         }
     }
 
-    private fun getCompanyInfo() {
+    private fun getCompanyInfo(symbol: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val companyResult = async { repository.getCompanyInfo(symbol = symbol) }
             when (val result = companyResult.await()) {
@@ -58,7 +58,7 @@ class CompanyInfoViewModel(
         }
     }
 
-    private fun getIntradayInfo() {
+    private fun getIntradayInfo(symbol: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = _state.value.copy(isLoading = true)
             val intradayInfoResult = async { repository.getIntradayInfo(symbol = symbol) }
