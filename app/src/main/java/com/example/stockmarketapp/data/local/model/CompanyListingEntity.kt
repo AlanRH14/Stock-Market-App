@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.data.local
+package com.example.stockmarketapp.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

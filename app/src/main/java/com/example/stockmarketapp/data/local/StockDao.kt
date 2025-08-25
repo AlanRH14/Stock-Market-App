@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.stockmarketapp.data.local.model.CompanyListingEntity
 
 @Dao
 interface StockDao {
