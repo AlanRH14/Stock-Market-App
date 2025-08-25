@@ -2,8 +2,8 @@ package com.example.stockmarketapp.data.repository
 
 import com.example.stockmarketapp.common.ApiMapper
 import com.example.stockmarketapp.common.CSVParser
-import com.example.stockmarketapp.data.local.CompanyListingEntity
-import com.example.stockmarketapp.data.local.StockDao
+import com.example.stockmarketapp.data.local.model.CompanyListingEntity
+import com.example.stockmarketapp.data.local.dao.StockDao
 import com.example.stockmarketapp.data.remote.api.StockApi
 import com.example.stockmarketapp.data.remote.dto.CompanyInfoDto
 import com.example.stockmarketapp.domain.CompanyInfo

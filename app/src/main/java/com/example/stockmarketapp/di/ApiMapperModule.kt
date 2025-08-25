@@ -1,7 +1,7 @@
 package com.example.stockmarketapp.di
 
 import com.example.stockmarketapp.common.ApiMapper
-import com.example.stockmarketapp.data.local.CompanyListingEntity
+import com.example.stockmarketapp.data.local.model.CompanyListingEntity
 import com.example.stockmarketapp.data.mapper_impl.CompanyDomainMapper
 import com.example.stockmarketapp.data.mapper_impl.CompanyEntityMapper
 import com.example.stockmarketapp.data.mapper_impl.CompanyInfoApiMapper

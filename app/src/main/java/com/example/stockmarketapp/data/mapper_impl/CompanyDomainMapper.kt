@@ -1,7 +1,7 @@
 package com.example.stockmarketapp.data.mapper_impl
 
 import com.example.stockmarketapp.common.ApiMapper
-import com.example.stockmarketapp.data.local.CompanyListingEntity
+import com.example.stockmarketapp.data.local.model.CompanyListingEntity
 import com.example.stockmarketapp.domain.model.CompanyListing
 
 class CompanyDomainMapper : ApiMapper<CompanyListing, CompanyListingEntity> {
