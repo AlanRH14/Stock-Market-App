@@ -1,4 +1,4 @@
-package com.example.stockmarketapp.data.local
+package com.example.stockmarketapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,7 +9,7 @@ import com.example.stockmarketapp.data.local.model.CompanyListingEntity
 @Dao
 interface StockDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertCompanyListings(
         companyListingsEntities: List<CompanyListingEntity>
     )
