@@ -11,7 +11,7 @@ composeBom = "2025.07.00"
 
 kspVersion = "2.1.21-2.0.1"
 
-navigationCompose = "2.9.2"
+navigationCompose = "2.9.4"
 
 koinAndroid = "4.1.1"
 
