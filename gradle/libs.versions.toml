@@ -13,7 +13,7 @@ kspVersion = "2.1.21-2.0.1"
 
 navigationCompose = "2.9.2"
 
-koinAndroid = "4.1.0"
+koinAndroid = "4.1.1"
 
 retrofitVersion = "3.0.0"
 loggingInterceptor = "5.1.0"
