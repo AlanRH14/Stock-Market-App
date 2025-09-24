@@ -21,7 +21,7 @@ okhttpVersion = "5.1.0"
 
 kotlinxSerialization = "1.9.0"
 
-roomVersion = "2.8.0"
+roomVersion = "2.8.1"
 
 openCsv = "5.12.0"
 
